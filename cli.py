@@ -5,7 +5,8 @@ import openai
 
 # Set up defaults and get API key from environment variable
 defaults = {
-    "api_key": os.getenv('OPENAI_API_KEY'),
+    "api_key": os.getenv('GPTSCRIPT_GATEWAY_API_KEY'),
+    "gateway_url": os.getenv('GPTSCRIPT_GATEWAY_URL', 'https://gateway-api.gptscript.ai'),
     "model": "dall-e-3",
     "size": "1024x1024",
     "quality": "standard",
@@ -32,9 +33,11 @@ def validate_and_parse_args(parser):
 
 def main():
     # Parse the command line arguments
-    parser = argparse.ArgumentParser(description="CLI for image generation prompt using OpenAI's DALL-E model.")
+    parser = argparse.ArgumentParser(description="CLI for image generation prompt using GPTScript Gateway.")
     parser.add_argument('-k', '--api-key', type=str, default=defaults["api_key"],
-                        help='OpenAI API key. Can also be set with OPENAI_API_KEY environment variable.')
+                        help='GPTScript Gateway API key. Can also be set with GPTSCRIPT_GATEWAY_API_KEY environment variable.')
+    parser.add_argument('-u', '--gateway-url', type=str, default=defaults["gateway_url"],
+                        help='GPTScript Gateway URL. Can also be set with GPTSCRIPT_GATEWAY_URL environment variable.')
     parser.add_argument('-p', '--prompt', type=str, required=True, help='Prompt for image generation.')
     parser.add_argument('-m', '--model', type=str, default=defaults["model"],
                         help=f'Model to use for image generation. Default is "{defaults["model"]}".')
@@ -47,7 +50,7 @@ def main():
     args = validate_and_parse_args(parser)
 
     # Initialize OpenAI client
-    client = openai.OpenAI(api_key=args.api_key)
+    client = openai.OpenAI(api_key=args.api_key, base_url=args.gateway_url + "/llm")
 
     # Make request to the OpenAI API
     try:

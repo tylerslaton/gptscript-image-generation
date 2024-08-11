@@ -1,9 +1,9 @@
-name: image-generation
-credential: github.com/gptscript-ai/credential as sys.openai with OPENAI_API_KEY as env and "Please provide your OpenAI API key" as message and key as field
-description: Generates images based on the specified parameters and returns a list of URLs to the generated images.
-args: prompt: (required) The text prompt based on which the GPT model will generate a response
-args: size: (optional) The size of the image to generate, format WxH (e.g. 1024x1024). Defaults to 1024x1024.
-args: quality: (optional) The quality of the generated image. Allowed values are "standard" or "hd". Default is "standard".
-args: number: (optional) The number of images to generate. Defaults to 1.
+Name: image-generation
+Credential: github.com/gptscript-ai/gateway-creds as github.com/gptscript-ai/gateway
+Description: Generates images based on the specified parameters and returns a list of URLs to the generated images.
+Args: prompt: (required) The text prompt based on which the GPT model will generate a response
+Args: size: (optional) The size of the image to generate, format WxH (e.g. 1024x1024). Defaults to 1024x1024.
+Args: quality: (optional) The quality of the generated image. Allowed values are "standard" or "hd". Default is "standard".
+Args: number: (optional) The number of images to generate. Defaults to 1.
 
 #!/usr/bin/env python3 ${GPTSCRIPT_TOOL_DIR}/cli.py --prompt="${PROMPT}" --size="${SIZE}" --quality="${QUALITY}" --number="${NUMBER}"
